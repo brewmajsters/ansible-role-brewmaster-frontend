@@ -16,13 +16,6 @@
     force: true
   tags: install
 
-- name: REPLACE | enable all host connection
-  replace:
-    path: "{{ repo['dest'] }}/package.json"
-    regexp: 'webpack-dev-server --no-inline --open --hot --port 80'
-    replace: 'webpack-dev-server --no-inline --open --hot --host 0.0.0.0 --port 80'
-  tags: configure
-
 - name: NPM | install
   npm:
     path: "{{ repo['dest'] }}"
@@ -41,14 +34,14 @@
     src: "nodejs_unit_file.service.j2"
     dest: "/etc/systemd/system/{{ frontend_service['name'] }}.service"
   register: unit_file
-  notify:
-    - SYSTEMD | frontend restart
-    - SYSTEMD | daemon reload
+  notify: SYSTEMD | frontend restart
   tags: configure
 
 - name: SYSTEMD | start frontend
   become: true
+  when: unit_file.changed
   systemd:
+    daemon_reload: true
     name: "{{ frontend_service['name'] }}"
     state: started
     enabled: true

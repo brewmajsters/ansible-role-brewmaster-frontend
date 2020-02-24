@@ -45,6 +45,7 @@ platforms:
   - name: instance-frontend
     image: "geerlingguy/docker-debian10-ansible:latest"
     command: "/sbin/init"
+    network_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
