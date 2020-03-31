@@ -3,3 +3,6 @@
 dependencies:
   - git
   - npm
+
+frontend_service:
+  name: "frontend"
