@@ -4,8 +4,5 @@ repo:
   dest: "frontend"
   url: "https://github.com/brewmajsters/brewmaster-frontend.git"
 
-frontend_service:
-  name: "frontend"
-
 npm:
   run_script: "dev"

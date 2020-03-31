@@ -1,0 +1,14 @@
+---
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: retrieve service state
+      become: true
+      service_facts:
+
+    - name: ensure the frontend service is up and running
+      failed_when: "ansible_facts.services['frontend.service']['state'] != 'running'"
+      changed_when: false
+      debug:
+        msg: "frontend service is '{{ ansible_facts.services['frontend.service']['state'] }}'"
