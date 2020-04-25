@@ -10,10 +10,10 @@ None
 
 ## Role Variables
 
-    repo:
+    frontend_repo:
       dest: <str, absolute or relative path of github repo destination directory>
       version: <str, branch name or commit to clone>
-    npm:
+    frontend_npm:
       run_script: <str, target npm script to run in systemd service (defaults to 'dev')>
 
 ## Dependencies

@@ -1,8 +1,8 @@
 ---
 
-repo:
+frontend_repo:
   dest: "frontend"
   url: "https://github.com/brewmajsters/brewmaster-frontend.git"
 
-npm:
+frontend_npm:
   run_script: "dev"

@@ -10,21 +10,21 @@
 
 - name: GIT | clone brewmaster-frontend repository
   git:
-    repo: "{{ repo['url'] }}"
-    version: "{{ repo['version'] | default(omit) }}"
-    dest: "{{ repo['dest'] }}"
+    repo: "{{ frontend_repo['url'] }}"
+    version: "{{ frontend_repo['version'] | default(omit) }}"
+    dest: "{{ frontend_repo['dest'] }}"
     force: true
   tags: install
 
 - name: NPM | install
   npm:
-    path: "{{ repo['dest'] }}"
+    path: "{{ frontend_repo['dest'] }}"
   tags: install
 
 - name: SYSTEMD | nodejs repo absolute path
   command: "pwd"
   args:
-    chdir: "{{ repo['dest'] }}"
+    chdir: "{{ frontend_repo['dest'] }}"
   register: repo_absolute_path
   changed_when: false
 
