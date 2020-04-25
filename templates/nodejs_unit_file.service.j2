@@ -4,4 +4,4 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ repo_absolute_path.stdout }}
-ExecStart=npm run-script "{{ npm['run_script'] }}"
+ExecStart=npm run-script "{{ frontend_npm['run_script'] }}"
