@@ -4,4 +4,5 @@ After=network.target
 
 [Service]
 WorkingDirectory={{ repo_absolute_path.stdout }}
-ExecStart=npm run-script "{{ frontend_npm['run_script'] }}"
+Environment=PATH={{ frontend_nodejs_archive_root_path }}/{{ frontend_nodejs_archive_dir }}/bin:{{ ansible_env.PATH }}
+ExecStart={{ frontend_nodejs_archive_root_path }}/{{ frontend_nodejs_archive_dir }}/bin/npm run-script {{ frontend_npm['run_script'] }}
