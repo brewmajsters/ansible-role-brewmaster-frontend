@@ -1,8 +1,9 @@
 ---
 
+frontend_nodejs_archive_dir: "{{ frontend_nodejs_archive_url.split('/')[-1].split('.')[:-2] | join('.') }}"
+
 dependencies:
   - git
-  - npm
 
 frontend_service:
   name: "frontend"

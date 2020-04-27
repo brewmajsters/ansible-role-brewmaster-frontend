@@ -8,6 +8,44 @@
   loop: "{{ dependencies }}"
   tags: install
 
+- name: create nodejs directories
+  become: true
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ frontend_nodejs_archive_root_path }}"
+    - "{{ frontend_nodejs_archive_root_path }}/{{ frontend_nodejs_archive_dir }}"
+  tags: install
+
+- name: download latest nodejs archive
+  become: true
+  get_url:
+    url: "{{ frontend_nodejs_archive_url }}"
+    dest: "{{ frontend_nodejs_archive_root_path }}"
+  register: nodejs_archive
+  tags: install
+
+# retrieve nodejs_archive.dest = /opt/nodejs/nodejs-10.3.3.-x64.tar.gz
+
+- name: unpack nodejs archive
+  become: true
+  unarchive:
+    remote_src: true
+    src: "{{ nodejs_archive.dest }}"
+    dest: "{{ frontend_nodejs_archive_root_path }}"
+  tags: install
+
+- name: update path in profiles
+  blockinfile:
+    block: |
+      # Nodejs
+      export PATH={{ frontend_nodejs_archive_root_path }}/{{ frontend_nodejs_archive_dir }}/bin:$PATH
+    path: "{{ item }}/.profile"
+    create: true
+  loop: "{{ frontend_npm_users }}"
+  tags: install
+
 - name: GIT | clone brewmaster-frontend repository
   git:
     repo: "{{ frontend_repo['url'] }}"
@@ -16,9 +54,12 @@
     force: true
   tags: install
 
-- name: NPM | install
-  npm:
-    path: "{{ frontend_repo['dest'] }}"
+- name: NPM | install frontend
+  become: true
+  shell: >
+    . ~/.profile && npm build . && npm install
+  args:
+    chdir: "{{ frontend_repo['dest'] }}"
   tags: install
 
 - name: SYSTEMD | nodejs repo absolute path
