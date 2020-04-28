@@ -88,11 +88,16 @@
   notify: SYSTEMD | frontend restart
   tags: configure
 
-- name: SYSTEMD | start frontend
+- name: SYSTEMD | reload daemon
   become: true
   when: unit_file.changed
   systemd:
     daemon_reload: true
+  tags: configure
+
+- name: SYSTEMD | ensure frontend is started and enabled
+  become: true
+  systemd:
     name: "{{ frontend_service['name'] }}"
     state: started
     enabled: true
