@@ -10,5 +10,5 @@ frontend_npm:
 frontend_nodejs_archive_url: "https://nodejs.org/dist/v12.16.2/node-v12.16.2-linux-x64.tar.gz"
 frontend_nodejs_archive_root_path: "/opt/nodejs"
 
-frontend_npm_users:
-  - root
+frontend_npm_users_home:
+  - /root

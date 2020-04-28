@@ -37,13 +37,14 @@
   tags: install
 
 - name: update path in profiles
+  become: true
   blockinfile:
     block: |
       # Nodejs
       export PATH={{ frontend_nodejs_archive_root_path }}/{{ frontend_nodejs_archive_dir }}/bin:$PATH
     path: "{{ item }}/.profile"
     create: true
-  loop: "{{ frontend_npm_users }}"
+  loop: "{{ frontend_npm_users_home }}"
   tags: install
 
 - name: GIT | clone brewmaster-frontend repository
@@ -53,9 +54,6 @@
     dest: "{{ frontend_repo['dest'] }}"
     force: true
   tags: install
-
-- apt:
-    name: jq
 
 - name: change listen address to 0.0.0.0
   shell: "{{ item }}"

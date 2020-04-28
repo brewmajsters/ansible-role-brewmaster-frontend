@@ -17,7 +17,7 @@ None
       run_script: <str, target npm script to run in systemd service (defaults to 'dev')>
     frontend_nodejs_archive_url: <str, nodejs binary archive url>
     frontend_nodejs_archive_root_path: <str, download path of nodejs archive>
-    frontend_npm_users: <list, users to run npm and node binaries>
+    frontend_npm_users_home: <list, home dir paths of users to run npm and node binaries>
 
 ## Dependencies
 
