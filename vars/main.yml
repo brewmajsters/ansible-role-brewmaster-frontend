@@ -4,6 +4,7 @@ frontend_nodejs_archive_dir: "{{ frontend_nodejs_archive_url.split('/')[-1].spli
 
 dependencies:
   - git
+  - jq
 
 frontend_service:
   name: "frontend"
