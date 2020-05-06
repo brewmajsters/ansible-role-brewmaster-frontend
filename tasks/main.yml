@@ -65,6 +65,20 @@
     - mv package_tmp.json package.json
   tags: install
 
+- name: copy .env.example to .env file
+  command: "cp .env.example .env"
+  args:
+    chdir: "{{ frontend_repo['dest'] }}"
+  tags: install
+
+- name: configure environment variables
+  lineinfile:
+    regex: "{{ item.key }}"
+    line: "{{ item.key }}={{ item.value }}"
+    path: "{{ frontend_repo['dest'] }}/.env"
+  with_dict: "{{ frontend_environments }}"
+  tags: install
+
 - name: NPM | install frontend
   become: true
   shell: >

@@ -12,3 +12,8 @@ frontend_nodejs_archive_root_path: "/opt/nodejs"
 
 frontend_npm_users_home:
   - /root
+
+frontend_environments: {}
+# frontend_environments:
+#   BACKEND_HOST: localhost
+#   BACKEND_PORT: 5000

@@ -18,6 +18,7 @@ None
     frontend_nodejs_archive_url: <str, nodejs binary archive url>
     frontend_nodejs_archive_root_path: <str, download path of nodejs archive>
     frontend_npm_users_home: <list, home dir paths of users to run npm and node binaries>
+    frontend_environments: <dict, environment variables to be modified in '.env' file>
 
 ## Dependencies
 
