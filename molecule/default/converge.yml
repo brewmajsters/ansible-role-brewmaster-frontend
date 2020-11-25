@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: ansible-role-brewmaster-frontend
+      vars:
+        frontend_repo_version: develop

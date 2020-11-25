@@ -1,8 +1,8 @@
 ---
 
-frontend_repo:
-  dest: "frontend"
-  url: "https://github.com/brewmajsters/brewmaster-frontend.git"
+frontend_repo_dest: "frontend"
+frontend_repo_url: "https://github.com/brewmajsters/brewmaster-frontend.git"
+# frontend_repo_version: "develop"
 
 frontend_npm:
   run_script: "dev"
@@ -17,3 +17,5 @@ frontend_environments: {}
 # frontend_environments:
 #   BACKEND_HOST: localhost
 #   BACKEND_PORT: 5000
+
+frontend_listen_address: 0.0.0.0

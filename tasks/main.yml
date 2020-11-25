@@ -49,18 +49,18 @@
 
 - name: GIT | clone brewmaster-frontend repository
   git:
-    repo: "{{ frontend_repo['url'] }}"
-    version: "{{ frontend_repo['version'] | default(omit) }}"
-    dest: "{{ frontend_repo['dest'] }}"
+    repo: "{{ frontend_repo_url }}"
+    version: "{{ frontend_repo_version | default(omit) }}"
+    dest: "{{ frontend_repo_dest }}"
     force: true
   tags: install
 
-- name: change listen address to 0.0.0.0
+- name: change listen address to {{ frontend_listen_address }}
   shell: "{{ item }}"
   args:
-    chdir: "{{ frontend_repo['dest'] }}"
+    chdir: "{{ frontend_repo_dest }}"
   loop:
-    - jq '.scripts.dev = "webpack-dev-server --no-inline --open --hot --host 0.0.0.0 --port 80"' package.json > package_tmp.json
+    - jq '.scripts.dev = "webpack-dev-server --no-inline --open --hot --host {{ frontend_listen_address }} --port 80"' package.json > package_tmp.json
     - rm package.json
     - mv package_tmp.json package.json
   tags: install
@@ -68,14 +68,14 @@
 - name: copy .env.example to .env file
   command: "cp .env.example .env"
   args:
-    chdir: "{{ frontend_repo['dest'] }}"
+    chdir: "{{ frontend_repo_dest }}"
   tags: install
 
 - name: configure environment variables
   lineinfile:
     regex: "{{ item.key }}"
     line: "{{ item.key }}={{ item.value }}"
-    path: "{{ frontend_repo['dest'] }}/.env"
+    path: "{{ frontend_repo_dest }}/.env"
   with_dict: "{{ frontend_environments }}"
   tags: install
 
@@ -84,12 +84,12 @@
   shell: >
     . ~/.profile && npm build . && npm install
   args:
-    chdir: "{{ frontend_repo['dest'] }}"
+    chdir: "{{ frontend_repo_dest }}"
 
 - name: SYSTEMD | nodejs repo absolute path
   command: "pwd"
   args:
-    chdir: "{{ frontend_repo['dest'] }}"
+    chdir: "{{ frontend_repo_dest }}"
   register: repo_absolute_path
   changed_when: false
 
