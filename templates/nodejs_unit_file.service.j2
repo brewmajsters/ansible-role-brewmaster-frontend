@@ -1,8 +1,12 @@
 [Unit]
 Description="Node.js frontend"
-After=network.target
+After=network.target backend.service
 
 [Service]
 WorkingDirectory={{ repo_absolute_path.stdout }}
+Restart=always
 Environment=PATH={{ frontend_nodejs_archive_root_path }}/{{ frontend_nodejs_archive_dir }}/bin:{{ ansible_env.PATH }}
 ExecStart={{ frontend_nodejs_archive_root_path }}/{{ frontend_nodejs_archive_dir }}/bin/npm run-script {{ frontend_npm['run_script'] }}
+
+[Install]
+WantedBy=multi-user.target
